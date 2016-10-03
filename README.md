@@ -1,0 +1,1 @@
+Have you ever played the card game War? Did you ever get bored of playing the standard version of the game over and over again? Don't worry, I got your back. This project will contain several exciting variations of the classic card game. The gameplay will be console-based, which is way more exciting than using an actual GUI.
