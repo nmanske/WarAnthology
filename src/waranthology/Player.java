@@ -1,14 +1,13 @@
 package waranthology;
 
 import java.util.List;
-import java.util.LinkedList;
 
 public final class Player {
 	
 	private String name;
 	private List<Card> hand;
 			
-	public Player(String name, LinkedList<Card> hand) {
+	public Player(String name, List<Card> hand) {
 		this.name = name;
 		this.hand = hand;
 	}
@@ -19,6 +18,19 @@ public final class Player {
 	
 	public boolean isOutOfCards() {
 		return hand.size() == 0;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public List<Card> getHand() {
+		return hand;
+	}
+	
+	@Override
+	public String toString() {
+		return name + " - " + hand;
 	}
 	
 }

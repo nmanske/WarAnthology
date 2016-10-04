@@ -12,11 +12,10 @@ public final class Card {
 		EIGHT(8),
 		NINE(9),
 		TEN(10),
-		JACK(11,"Jack"),
-		QUEEN(12,"Queen"),
-		KING(13,"King"),
-		ACE(14,"Ace"),
-		JOKER(15,"");
+		JACK(11,"J"),
+		QUEEN(12,"Q"),
+		KING(13,"K"),
+		ACE(14,"A");
 		
 		private int value;
 		private String name;
@@ -41,15 +40,29 @@ public final class Card {
 	}
 	
 	public enum Suit {
-		HEARTS("Hearts"),
-		SPADES("Spades"),
-		CLUBS("Clubs"),
-		DIAMONDS("Diamonds"),
-		JOKER("Joker");
+		HEARTS("H"),
+		SPADES("S"),
+		CLUBS("C"),
+		DIAMONDS("D");
 		
 		private String name;
 		
 		private Suit(String name) {
+			this.name = name;
+		}
+		
+		public String getName() {
+			return name;
+		}
+	}
+	
+	public enum Joker {
+		LOW("J-L"),
+		HIGH("J-H");
+		
+		private String name;
+				
+		private Joker(String name) {
 			this.name = name;
 		}
 		
@@ -63,14 +76,20 @@ public final class Card {
 	
 	private Rank rank;
 	private Suit suit;
+	private Joker joker;
 	private boolean faceUp = true;
 	
 	public Card(Rank rank, Suit suit) {
+		assert rank 
 		if (rank.getValue() < MIN_RANK || rank.getValue() > MAX_RANK) {
 			throw new IllegalArgumentException("Card rank must be between 2 and 14 (Ace)");
 		}
 		this.rank = rank;
 		this.suit = suit;
+	}
+	
+	public Card(Joker joker) {
+		this.joker = joker;
 	}
 	
 	public Rank getRank() {
@@ -79,6 +98,14 @@ public final class Card {
 
 	public Suit getSuit() {
 		return suit;
+	}
+	
+	public Joker getJoker() {
+		return joker;
+	}
+	
+	public boolean isJoker() {
+		return joker != null;
 	}
 
 	public boolean isFaceUp() {
@@ -91,9 +118,7 @@ public final class Card {
 	
 	@Override
 	public String toString() {
-		return (suit.getName().equals(Suit.JOKER.getName())) ? 
-				suit.getName() : 
-				rank.getName() + " of " + suit.getName();
+		return (isJoker()) ? joker.getName() : rank.getName() + '-' + suit.getName();
 	}
 
 }
