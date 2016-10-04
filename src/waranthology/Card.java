@@ -2,41 +2,95 @@ package waranthology;
 
 public class Card {
 	
-	public static final int RANK_JACK = 11;
-	public static final int RANK_QUEEN = 12;
-	public static final int RANK_KING = 13;
-	public static final int RANK_ACE = 14;
+	public enum Rank {
+		TWO(2),
+		THREE(3),
+		FOUR(4),
+		FIVE(5),
+		SIX(6),
+		SEVEN(7),
+		EIGHT(8),
+		NINE(9),
+		TEN(10),
+		JACK(11,"J"),
+		QUEEN(12,"Q"),
+		KING(13,"K"),
+		ACE(14,"A"),
+		JOKER;
+		
+		private int value;
+		private String name;
+		
+		private Rank() {
+			this.value = 15;
+			this.name= "";
+		}
+		
+		private Rank(int value) {
+			this.value = value;
+			this.name = String.valueOf(value);
+		}
+		
+		private Rank(int value, String name) {
+			this.value = value;
+			this.name= name;
+		}
+		
+		public int getValue() {
+			return value;
+		}
+		
+		public String getName() {
+			return name;
+		}
+	}
 	
-	public static final int MIN_RANK = 2;
-	public static final int MAX_RANK = RANK_ACE;
+	public enum Suit {
+		HEARTS("H"),
+		SPADES("S"),
+		CLUBS("C"),
+		DIAMONDS("D"),
+		JOKER("J");
+		
+		private String name;
+		
+		private Suit(String name) {
+			this.name = name;
+		}
+		
+		public String getName() {
+			return name;
+		}
+	}
 	
-	private static final String ranks[] = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace" };
+	public static final int MIN_RANK = Rank.TWO.getValue();
+	public static final int MAX_RANK = Rank.ACE.getValue();
 	
-	private int rank;
-	private String suit;
+	private Rank rank;
+	private Suit suit;
 	private boolean faceUp = true;
 	
-	public Card(int rank, String suit) {
-		if (rank > MAX_RANK || rank < MIN_RANK) {
+	public Card(Rank rank, Suit suit) {
+		if (rank.getValue() < MIN_RANK || rank.getValue() > MAX_RANK) {
 			throw new IllegalArgumentException("Card rank must be between 2 and 14 (Ace)");
 		}
 		this.rank = rank;
 		this.suit = suit;
 	}
 	
-	public int getRank() {
+	public Rank getRank() {
 		return rank;
 	}
 
-	public void setRank(int rank) {
+	public void setRank(Rank rank) {
 		this.rank = rank;
 	}
 
-	public String getSuit() {
+	public Suit getSuit() {
 		return suit;
 	}
 
-	public void setSuit(String suit) {
+	public void setSuit(Suit suit) {
 		this.suit = suit;
 	}
 
@@ -50,10 +104,9 @@ public class Card {
 	
 	@Override
 	public String toString() {
-		int RANKS_OFFSET = 2;
-		if (suit.equals("JOKER")) return "Joker";
-		else if (!faceUp) return "[Facedown Card]";
-		return ranks[rank-RANKS_OFFSET] + " of " + suit;
+		return (suit.getName().equals(Suit.JOKER.getName())) ? 
+				suit.getName() : 
+				rank.getName() + suit.getName().charAt(0);
 	}
 
 }
