@@ -50,10 +50,10 @@ public class Card {
 	
 	@Override
 	public String toString() {
-		String faceDownText = (faceUp) ? "" : " (facedown)";
 		int RANKS_OFFSET = 2;
 		if (suit.equals("JOKER")) return "Joker";
-		return ranks[rank-RANKS_OFFSET] + " of " + suit + faceDownText;
+		else if (!faceUp) return "[Facedown Card]";
+		return ranks[rank-RANKS_OFFSET] + " of " + suit;
 	}
 
 }
