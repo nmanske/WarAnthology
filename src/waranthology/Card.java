@@ -1,6 +1,6 @@
 package waranthology;
 
-public class Card {
+public final class Card {
 	
 	public enum Rank {
 		TWO(2),
@@ -12,19 +12,14 @@ public class Card {
 		EIGHT(8),
 		NINE(9),
 		TEN(10),
-		JACK(11,"J"),
-		QUEEN(12,"Q"),
-		KING(13,"K"),
-		ACE(14,"A"),
-		JOKER;
+		JACK(11,"Jack"),
+		QUEEN(12,"Queen"),
+		KING(13,"King"),
+		ACE(14,"Ace"),
+		JOKER(15,"");
 		
 		private int value;
 		private String name;
-		
-		private Rank() {
-			this.value = 15;
-			this.name= "";
-		}
 		
 		private Rank(int value) {
 			this.value = value;
@@ -46,11 +41,11 @@ public class Card {
 	}
 	
 	public enum Suit {
-		HEARTS("H"),
-		SPADES("S"),
-		CLUBS("C"),
-		DIAMONDS("D"),
-		JOKER("J");
+		HEARTS("Hearts"),
+		SPADES("Spades"),
+		CLUBS("Clubs"),
+		DIAMONDS("Diamonds"),
+		JOKER("Joker");
 		
 		private String name;
 		
@@ -82,16 +77,8 @@ public class Card {
 		return rank;
 	}
 
-	public void setRank(Rank rank) {
-		this.rank = rank;
-	}
-
 	public Suit getSuit() {
 		return suit;
-	}
-
-	public void setSuit(Suit suit) {
-		this.suit = suit;
 	}
 
 	public boolean isFaceUp() {
@@ -106,7 +93,7 @@ public class Card {
 	public String toString() {
 		return (suit.getName().equals(Suit.JOKER.getName())) ? 
 				suit.getName() : 
-				rank.getName() + suit.getName().charAt(0);
+				rank.getName() + " of " + suit.getName();
 	}
 
 }
