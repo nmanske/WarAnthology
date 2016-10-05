@@ -6,6 +6,7 @@ public final class Player {
 	
 	private String name;
 	private List<Card> hand;
+	private boolean turn = false;
 			
 	public Player(String name, List<Card> hand) {
 		this.name = name;
@@ -26,6 +27,14 @@ public final class Player {
 	
 	public List<Card> getHand() {
 		return hand;
+	}
+	
+	public boolean isTurn() {
+		return turn;
+	}
+	
+	public void setTurn(boolean turn) {
+		this.turn = turn;
 	}
 	
 	@Override

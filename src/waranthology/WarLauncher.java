@@ -16,11 +16,12 @@ public class WarLauncher {
 	
 	public enum WarGame {
 		WAR("Traditional War"),
-		GUERILLA_JOKER("Guerilla Joker"), 	/* Created by Ryan Hill */
+		INEVITABLE_WAR("Inevitable War"),
+		SAVAGE_WAR("Savage War"),
 		GALACTIC_WAR("Galactic War"),		/* Created by Lee Walker */
 		CLONE_WAR("Clone War");				/* Created by Ken Scherer */
 		
-		public static final int CLONE_WAR_FACE_CARD_COUNT = 16;
+		public static final int CLONE_WAR_UNIQUE_FACE_COUNT = 16;
 		private static final int size = WarGame.values().length;
 		
 		private String name;
@@ -38,62 +39,73 @@ public class WarLauncher {
 		}
 	}
 
-	public static void main(String[] args) {		
-		WarLauncher.displayMenu();
-		//WarGame game = WarLauncher.getWarGame();
-		WarGame gameMode = WarGame.GUERILLA_JOKER;
-		List<Card> deck;
-		switch (gameMode) {
-			case CLONE_WAR:
-				deck = initCloneDeck();
-				break;
-			default:
-				deck = initStandardDeck();
-				break;
-		}
-		if (gameMode.equals(WarGame.GUERILLA_JOKER)) {
-			deck.add(new Card(Joker.LOW));
-			deck.add(new Card(Joker.HIGH));
-		}
-		//Collections.shuffle(deck);
-		for (Card c : deck) {
-			System.out.println(c.toString());
-		}
-		System.out.println(deck.size());
-		Player player1 = new Player("Nathan", deck.subList(0, deck.size()/2));
-		Player player2 = new Player("Catherine", deck.subList(deck.size()/2, deck.size()));
-		
+	public static void main(String[] args) {	
+		WarGame gameMode = WarLauncher.getInput();
+		/*WarGame gameMode = WarGame.INEVITABLE_WAR; 
+		List<Card> deck = initDeck(gameMode);
+		Player player1 = new Player("Player 1", deck.subList(0, deck.size()/2));
+		Player player2 = new Player("Player 2", deck.subList(deck.size()/2, deck.size()));
+		WarHandler handler = new WarHandler(player1, player2, gameMode);
+		handler.run();*/
 	}
 	
 	private static void displayMenu() {
-		System.out.println("=========================");
-		System.out.println("|     WAR ANTHOLOGY     |");
-		System.out.println("|-----------------------|");
-		System.out.println("| 1. Traditional War    |");
-		System.out.println("| 2. Guerilla Joker     |");
-		System.out.println("| 3. Galactic War       |");
-		System.out.println("| 4. Clone War          |");
-		System.out.println("=========================\n");
+		System.out.println("=========================   ------------------------------\n" +
+						   "|     WAR ANTHOLOGY     |   |        COMMAND LIST        |\n" +
+						   "|-----------------------|   |----------------------------|\n" +
+						   "| 1: Traditional War    |   |  #: Start game (replace #  |\n" +
+						   "| 2: Inevitable War     |   |     w/ valid game number)  |\n" +
+						   "| 3: Savage War         |   | i#: View game instructions |\n" +
+						   "| 4: Galactic War       |   |  x: Quit                   |\n" +
+						   "| 5: Clone War          |   ------------------------------\n" +
+						   "=========================\n");
 	}
 	
+	private static void displayGameInstructions(int gameNum) {
+		switch (gameNum) {
+			case 1:
+				System.out.println();
+				break;
+			case 2:
+				System.out.println();
+				break;
+			case 3:
+				System.out.println();
+				break;
+			case 4:
+				System.out.println();
+				break;
+			case 5:
+				System.out.println();
+				break;
+		}
+	}
 
-	private static WarGame getWarGame() {
+	private static WarGame getInput() {
 		WarGame game = null;
 		Scanner sc = new Scanner(System.in);
 		int gameNum = 0;
 		do {
-			System.out.print("Enter game number to begin: ");
+			displayMenu();
+			System.out.print("Enter Command: ");
 			if (sc.hasNextInt()) {
 				gameNum = sc.nextInt();
 				if (isValidGame(gameNum)) {
 					game = WarGame.values()[gameNum-1];
 				}
 				else {
-					System.out.println("\nInput is not a valid game! Please try again.");
+					System.out.println("\nInteger is not a valid game! Please try again.");
 				}
 			}
-			else {
-				System.out.println("\nInvalid input! Please enter an integer.");
+			else if (sc.hasNextLine()) {
+				String command = sc.nextLine().substring(0,1);
+				System.out.println(command);
+				if (command.equalsIgnoreCase("i") || command.equalsIgnoreCase("x")) {
+					
+				}
+				else {
+					System.out.println("\nInvalid command! Please try again.");
+				}
 			}
 			System.out.println();
 		} while (!isValidGame(gameNum));
@@ -103,6 +115,24 @@ public class WarLauncher {
 	
 	private static boolean isValidGame(int gameNum) {
 		return gameNum <= WarGame.size() && gameNum > 0;
+	}
+	
+	private static LinkedList<Card> initDeck(WarGame gameMode) {
+		LinkedList<Card> deck = new LinkedList<>();
+		switch (gameMode) {
+			case CLONE_WAR:
+				deck = initCloneDeck();
+				break;
+			default:
+				deck = initStandardDeck();
+				break;
+		}
+		if (gameMode.equals(WarGame.INEVITABLE_WAR)) {
+			deck.add(new Card(Joker.JOKER));
+			deck.add(new Card(Joker.JOKER));
+		}
+		Collections.shuffle(deck);
+		return deck;
 	}
 	
 	private static LinkedList<Card> initStandardDeck() {
@@ -120,7 +150,7 @@ public class WarLauncher {
 		for (int i = Rank.JACK.ordinal(); i < NUM_RANKS; i++) {
 			Rank rank = Rank.values()[i];
 			for (Suit suit : Suit.values()) {
-				for(int k = 0; k < WarGame.CLONE_WAR_FACE_CARD_COUNT/4; k++) {
+				for(int k = 0; k < WarGame.CLONE_WAR_UNIQUE_FACE_COUNT/4; k++) {
 					cloneDeck.add(new Card(rank, suit));
 				}
 			}

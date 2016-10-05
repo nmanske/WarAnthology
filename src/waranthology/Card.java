@@ -57,17 +57,10 @@ public final class Card {
 	}
 	
 	public enum Joker {
-		LOW("J-L"),
-		HIGH("J-H");
-		
-		private String name;
-				
-		private Joker(String name) {
-			this.name = name;
-		}
+		JOKER;
 		
 		public String getName() {
-			return name;
+			return "JOK";
 		}
 	}
 	
@@ -80,7 +73,6 @@ public final class Card {
 	private boolean faceUp = true;
 	
 	public Card(Rank rank, Suit suit) {
-		assert rank 
 		if (rank.getValue() < MIN_RANK || rank.getValue() > MAX_RANK) {
 			throw new IllegalArgumentException("Card rank must be between 2 and 14 (Ace)");
 		}
@@ -98,10 +90,6 @@ public final class Card {
 
 	public Suit getSuit() {
 		return suit;
-	}
-	
-	public Joker getJoker() {
-		return joker;
 	}
 	
 	public boolean isJoker() {
